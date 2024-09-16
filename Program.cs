@@ -27,7 +27,7 @@ namespace Breakout
 
                     // Updates
                     ball.Update(deltaTime);
-                    paddle.Update(deltaTime);
+                    paddle.Update(ball, deltaTime);
                     window.Clear(new Color(131, 197, 235));
 
                     // Drawing
