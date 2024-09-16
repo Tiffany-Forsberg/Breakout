@@ -18,6 +18,8 @@ namespace Breakout
 
                 Clock clock = new Clock();
                 Ball ball = new Ball();
+                Paddle paddle = new Paddle();
+
                 while (window.IsOpen)
                 {
                     float deltaTime = clock.Restart().AsSeconds();
@@ -25,10 +27,12 @@ namespace Breakout
 
                     // Updates
                     ball.Update(deltaTime);
+                    paddle.Update(deltaTime);
                     window.Clear(new Color(131, 197, 235));
 
                     // Drawing
                     ball.Draw(window);
+                    paddle.Draw(window);
                     window.Display();
                 }
             }
