@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 
 namespace Breakout
 {
@@ -22,7 +23,27 @@ namespace Breakout
 
         public void Update(float deltaTime)
         {
+            var newPos = this.Sprite.Position;
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Right))
+            {
+                newPos.X += deltaTime * 300.0f;
+            }
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Left))
+            {
+                newPos.X -= deltaTime * 300.0f;
+            }
+
+            if (newPos.X > Program.ScreenW - this.Width / 2)
+            {
+                newPos.X = Program.ScreenW - this.Width / 2;
+            }
             
+            if (newPos.X < this.Width / 2)
+            {
+                newPos.X = this.Width / 2;
+            }
+
+            this.Sprite.Position = newPos;
         }
         
         public void Draw(RenderTarget target)
