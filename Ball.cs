@@ -10,15 +10,22 @@ namespace Breakout
         public const float Radius = Diameter * 0.5f;
         public Vector2f Direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
         private float Speed = 200.0f;
+        public int Health = 3;
+        public int Score;
+        public Text Gui;
+        public Vector2f StartPos = new Vector2f(250, 300);
         
         public Ball()
         {
-            this.Sprite = new Sprite();
-            this.Sprite.Texture = new Texture("assets/ball.png");
-            this.Sprite.Position = new Vector2f(250, 300);
+            Sprite = new Sprite();
+            Sprite.Texture = new Texture("assets/ball.png");
+            Sprite.Position = StartPos;
             Vector2f ballTextureSize = (Vector2f) Sprite.Texture.Size;
             Sprite.Origin = 0.5f * ballTextureSize;
             Sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);
+            Gui = new Text();
+            Gui.CharacterSize = 24;
+            Gui.Font = new Font("assets/future.ttf");
         }
 
         public void Update(float deltaTime)
@@ -43,8 +50,21 @@ namespace Breakout
             // Collision bottom of screen
             if (newPos.Y > Program.ScreenH - Radius)
             {
-                newPos.Y = Program.ScreenH - Radius;
-                Reflect(new Vector2f(0, -1));
+                if (Health > 0)
+                {
+                    Health -= 1;
+                    newPos = StartPos;
+                    float newXDirection;
+                    if (new Random().Next() % 2 == 0)
+                    {
+                        newXDirection = -1;
+                    }
+                    else
+                    {
+                        newXDirection = 1;
+                    }
+                    Direction = new Vector2f(newXDirection, 1) / MathF.Sqrt(2.0f);
+                }
             }
             
             // Collision top of screen
@@ -65,6 +85,14 @@ namespace Breakout
         public void Draw(RenderTarget target)
         {
             target.Draw(this.Sprite);
+
+            Gui.DisplayedString = $"Health: {Health}";
+            Gui.Position = new Vector2f(12, 8);
+            target.Draw(Gui);
+
+            Gui.DisplayedString = $"Score: {Score}";
+            Gui.Position = new Vector2f(Program.ScreenW - Gui.GetGlobalBounds().Width - 12, 8);
+            target.Draw(Gui);
         }
     }
 }

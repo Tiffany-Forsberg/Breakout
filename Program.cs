@@ -25,6 +25,13 @@ namespace Breakout
                     float deltaTime = clock.Restart().AsSeconds();
                     window.DispatchEvents();
 
+                    // Resets the game if the player loses
+                    if (ball.Health <= 0)
+                    {
+                        ball = new Ball();
+                        paddle = new Paddle();
+                    }
+
                     // Updates
                     ball.Update(deltaTime);
                     paddle.Update(ball, deltaTime);
