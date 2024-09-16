@@ -9,6 +9,7 @@ namespace Breakout
         public const float Diameter = 20.0f;
         public const float Radius = Diameter * 0.5f;
         public Vector2f Direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
+        private float Speed = 200.0f;
         
         public Ball()
         {
@@ -23,7 +24,7 @@ namespace Breakout
         public void Update(float deltaTime)
         {
             var newPos = this.Sprite.Position;
-            newPos += this.Direction * deltaTime * 100.0f;
+            newPos += this.Direction * deltaTime * this.Speed;
             
             // Collision right side of screen
             if (newPos.X > Program.ScreenW - Radius)
