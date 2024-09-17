@@ -61,6 +61,18 @@ namespace Breakout
         {
             for (int i = 0; i < Positions.Count; i++)
             {
+                if (Positions[i].Y == Program.ScreenH * 0.3f + -2 * 48 || Positions[i].Y == Program.ScreenH * 0.3f + 2 * 48 )
+                {
+                    Sprite.Texture = new Texture("assets/tilePink.png");
+                } 
+                else if (Positions[i].Y == Program.ScreenH * 0.3f + -1 * 48 || Positions[i].Y == Program.ScreenH * 0.3f + 1 * 48 )
+                {
+                    Sprite.Texture = new Texture("assets/tileBlue.png");
+                }
+                else
+                {
+                    Sprite.Texture = new Texture("assets/tileGreen.png");
+                }
                 Sprite.Position = Positions[i];
                 target.Draw(Sprite);
             }
