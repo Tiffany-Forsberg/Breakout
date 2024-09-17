@@ -18,9 +18,9 @@ namespace Breakout
             this.Sprite.Texture = new Texture("assets/paddle.png");
             this.Sprite.Position = new Vector2f(Program.ScreenW / 2f, Program.ScreenH - 50f);
             
-            Vector2f ballTextureSize = (Vector2f) this.Sprite.Texture.Size;
-            Sprite.Origin = 0.5f * ballTextureSize;
-            Sprite.Scale = new Vector2f(this.Width / ballTextureSize.X, this.Height / ballTextureSize.Y);
+            Vector2f paddleTextureSize = (Vector2f) this.Sprite.Texture.Size;
+            Sprite.Origin = 0.5f * paddleTextureSize;
+            Sprite.Scale = new Vector2f(this.Width / paddleTextureSize.X, this.Height / paddleTextureSize.Y);
 
             this.Size = new Vector2f(this.Sprite.GetGlobalBounds().Width, this.Sprite.GetGlobalBounds().Height);
         }
