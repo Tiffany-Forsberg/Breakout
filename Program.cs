@@ -34,6 +34,11 @@ namespace Breakout
                         tiles = new Tiles();
                     }
 
+                    if (tiles.Positions.Count == 0)
+                    {
+                        tiles = new Tiles();
+                    }
+
                     // Updates
                     ball.Update(deltaTime);
                     paddle.Update(ball, deltaTime);

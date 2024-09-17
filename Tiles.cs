@@ -50,6 +50,7 @@ namespace Breakout
                 {
                     ball.Sprite.Position += hit;
                     ball.Reflect(hit.Normalized());
+                    ball.Score += 100;
                     Positions.RemoveAt(i);
                     i = 0; // Check all again since ball was moved
                 }
