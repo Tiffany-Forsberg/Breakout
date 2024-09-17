@@ -19,6 +19,7 @@ namespace Breakout
                 Clock clock = new Clock();
                 Ball ball = new Ball();
                 Paddle paddle = new Paddle();
+                Tiles tiles = new Tiles();
 
                 while (window.IsOpen)
                 {
@@ -30,16 +31,19 @@ namespace Breakout
                     {
                         ball = new Ball();
                         paddle = new Paddle();
+                        tiles = new Tiles();
                     }
 
                     // Updates
                     ball.Update(deltaTime);
                     paddle.Update(ball, deltaTime);
+                    tiles.Update(ball, deltaTime);
                     window.Clear(new Color(131, 197, 235));
 
                     // Drawing
                     ball.Draw(window);
                     paddle.Draw(window);
+                    tiles.Draw(window);
                     window.Display();
                 }
             }

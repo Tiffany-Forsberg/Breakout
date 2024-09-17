@@ -13,7 +13,7 @@ namespace Breakout
         public int Health = 3;
         public int Score;
         public Text Gui;
-        public Vector2f StartPos = new Vector2f(250, 300);
+        public Vector2f StartPos = new Vector2f(250, 400);
         
         public Ball()
         {
