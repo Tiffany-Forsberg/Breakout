@@ -13,14 +13,14 @@ namespace Breakout
         public int Health = 3;
         public int Score;
         public Text Gui;
-        public Vector2f StartPos = new Vector2f(250, 400);
+        public bool Active;
         
         public Ball()
         {
             Sprite = new Sprite();
             Sprite.Texture = new Texture("assets/ball.png");
-            Sprite.Position = StartPos;
             Vector2f ballTextureSize = (Vector2f) Sprite.Texture.Size;
+            Active = false;
             Sprite.Origin = 0.5f * ballTextureSize;
             Sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);
             Gui = new Text();
@@ -53,7 +53,7 @@ namespace Breakout
                 if (Health > 0)
                 {
                     Health -= 1;
-                    newPos = StartPos;
+                    Active = false;
                     float newXDirection;
                     if (new Random().Next() % 2 == 0)
                     {
@@ -63,7 +63,7 @@ namespace Breakout
                     {
                         newXDirection = 1;
                     }
-                    Direction = new Vector2f(newXDirection, 1) / MathF.Sqrt(2.0f);
+                    Direction = new Vector2f(newXDirection, -1) / MathF.Sqrt(2.0f);
                 }
             }
             
