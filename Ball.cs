@@ -14,6 +14,7 @@ namespace Breakout
         public int Score;
         public Text Gui;
         public bool Active;
+        public int Bounces = 0;
         
         public Ball()
         {
@@ -80,6 +81,7 @@ namespace Breakout
         public void Reflect(Vector2f normal)
         {
             this.Direction -= normal * (2 * (this.Direction.X * normal.X + this.Direction.Y * normal.Y));
+            Bounces++;
         }
 
         public void Draw(RenderTarget target)

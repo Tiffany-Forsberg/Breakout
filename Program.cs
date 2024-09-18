@@ -21,9 +21,16 @@ namespace Breakout
                 Paddle paddle = new Paddle();
                 Tiles tiles = new Tiles();
                 PowerUps powerUps = new PowerUps();
+                Clock debugClock = new Clock();
+                Clock debugClock2 = new Clock();
 
                 while (window.IsOpen)
                 {
+                    if (debugClock2.ElapsedTime.AsSeconds() > 1)
+                    {
+                        Console.WriteLine($"Start of loop\nTime in seconds: {debugClock.ElapsedTime.AsSeconds()}\nAmount of bounces: {ball.Bounces}");
+                        debugClock2.Restart();
+                    }
                     float deltaTime = clock.Restart().AsSeconds();
                     window.DispatchEvents();
 
