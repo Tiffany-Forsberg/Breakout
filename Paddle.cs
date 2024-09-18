@@ -11,6 +11,7 @@ namespace Breakout
         public Vector2f Size;
         public float Width = 128.0f;
         public float Height = 28.0f;
+        private Clock Timer;
 
         public Paddle()
         {
@@ -23,9 +24,11 @@ namespace Breakout
             Sprite.Scale = new Vector2f(this.Width / paddleTextureSize.X, this.Height / paddleTextureSize.Y);
 
             this.Size = new Vector2f(this.Sprite.GetGlobalBounds().Width, this.Sprite.GetGlobalBounds().Height);
+
+            Timer = new Clock();
         }
 
-        public void Update(Ball ball, float deltaTime)
+        public void Update(Ball ball, PowerUps powerUps, float deltaTime)
         {
             var newPos = this.Sprite.Position;
             if (Keyboard.IsKeyPressed(Keyboard.Key.Right))
@@ -64,6 +67,29 @@ namespace Breakout
                 ball.Reflect(hit.Normalized());
             }
 
+            foreach (Vector2f position in powerUps.Positions)
+            {
+                if (Collision.CircleRectangle(
+                    position,
+                    PowerUps.Radius,
+                    Sprite.Position,
+                    Size,
+                    out Vector2f hitPowerUp
+                ))
+                {
+                    Timer.Restart();
+                }
+            }
+
+            if (Timer.ElapsedTime.AsSeconds() < 4)
+            {
+                Sprite.Scale = new Vector2f(Sprite.Texture.Size.X * 1.5f, Sprite.Texture.Size.Y);
+            }
+            else
+            {
+                
+            }
+            
             if (ball.Active == false)
             {
                 ball.Sprite.Position = newPos - new Vector2f(0, 30.0f);

@@ -34,7 +34,7 @@ namespace Breakout
             }
         }
 
-        public void Update(Ball ball, float deltaTime)
+        public void Update(Ball ball, float deltaTime, PowerUps powerUps)
         {
             for (int i = 0; i < Positions.Count; i++)
             {
@@ -51,6 +51,12 @@ namespace Breakout
                     ball.Sprite.Position += hit;
                     ball.Reflect(hit.Normalized());
                     ball.Score += 100;
+
+                    if (new Random().Next(1) == 0)
+                    {
+                        powerUps.Positions.Add(pos);
+                    }
+
                     Positions.RemoveAt(i);
                     i = 0; // Check all again since ball was moved
                 }
