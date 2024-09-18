@@ -9,9 +9,12 @@ namespace Breakout
     {
         public Sprite Sprite;
         public Vector2f Size;
+        public Vector2f BaseSize;
+        public Vector2f BaseScale;
         public float Width = 128.0f;
         public float Height = 28.0f;
         private Clock Timer;
+        public int PowerUpDuration;
 
         public Paddle()
         {
@@ -22,9 +25,12 @@ namespace Breakout
             Vector2f paddleTextureSize = (Vector2f) this.Sprite.Texture.Size;
             Sprite.Origin = 0.5f * paddleTextureSize;
             Sprite.Scale = new Vector2f(this.Width / paddleTextureSize.X, this.Height / paddleTextureSize.Y);
+            BaseScale = Sprite.Scale;
 
             this.Size = new Vector2f(this.Sprite.GetGlobalBounds().Width, this.Sprite.GetGlobalBounds().Height);
+            BaseSize = Size;
 
+            PowerUpDuration = 0;
             Timer = new Clock();
         }
 
@@ -77,17 +83,27 @@ namespace Breakout
                     out Vector2f hitPowerUp
                 ))
                 {
-                    Timer.Restart();
+                    if (PowerUpDuration == 0)
+                    {
+                        Timer.Restart();
+                    }
+
+                    PowerUpDuration += 4;
+                    powerUps.Positions.Remove(position);
+                    break;
                 }
             }
 
-            if (Timer.ElapsedTime.AsSeconds() < 4)
+            if (Timer.ElapsedTime.AsSeconds() < PowerUpDuration && PowerUpDuration > 0)
             {
-                Sprite.Scale = new Vector2f(Sprite.Texture.Size.X * 1.5f, Sprite.Texture.Size.Y);
+                Sprite.Scale = new Vector2f(BaseScale.X * 1.5f, BaseScale.Y);
+                Size = new Vector2f(BaseSize.X * 1.5f, BaseSize.Y);
             }
             else
             {
-                
+                PowerUpDuration = 0;
+                Sprite.Scale = BaseScale;
+                Size = BaseSize;
             }
             
             if (ball.Active == false)

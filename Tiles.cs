@@ -52,7 +52,7 @@ namespace Breakout
                     ball.Reflect(hit.Normalized());
                     ball.Score += 100;
 
-                    if (new Random().Next(1) == 0)
+                    if (new Random().Next(10) == 0)
                     {
                         powerUps.Positions.Add(pos);
                     }
