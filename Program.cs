@@ -20,6 +20,7 @@ namespace Breakout
                 Ball ball = new Ball();
                 Paddle paddle = new Paddle();
                 Tiles tiles = new Tiles();
+                PowerUps powerUps = new PowerUps();
 
                 while (window.IsOpen)
                 {
@@ -32,6 +33,7 @@ namespace Breakout
                         ball = new Ball();
                         paddle = new Paddle();
                         tiles = new Tiles();
+                        powerUps = new PowerUps();
                     }
 
                     if (tiles.Positions.Count == 0)
@@ -41,14 +43,17 @@ namespace Breakout
 
                     // Updates
                     ball.Update(deltaTime);
-                    paddle.Update(ball, deltaTime);
-                    tiles.Update(ball, deltaTime);
+                    paddle.Update(ball, powerUps, deltaTime);
+                    tiles.Update(ball, deltaTime, powerUps);
+                    powerUps.Update(deltaTime);
+                    
                     window.Clear(new Color(131, 197, 235));
 
                     // Drawing
                     ball.Draw(window);
                     paddle.Draw(window);
                     tiles.Draw(window);
+                    powerUps.Draw(window);
                     window.Display();
                 }
             }
