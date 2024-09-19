@@ -11,11 +11,18 @@ namespace Breakout
         public Sprite Sprite;
         public Vector2f Size;
         public List<Vector2f> Positions;
+        private List<Texture> TileTextures;
 
         public Tiles()
         {
             Sprite = new Sprite();
             Sprite.Texture = new Texture("assets/tileBlue.png");
+            TileTextures = new List<Texture>
+            {
+                new Texture("assets/tileBlue.png"),
+                new Texture("assets/tilePink.png"),
+                new Texture("assets/tileGreen.png"),
+            };
             
             Vector2f tileTextureSize = (Vector2f) this.Sprite.Texture.Size;
             Sprite.Origin = 0.5f * tileTextureSize;
@@ -67,18 +74,25 @@ namespace Breakout
         {
             for (int i = 0; i < Positions.Count; i++)
             {
-                if (Positions[i].Y == Program.ScreenH * 0.3f + -2.0f * 48.0f || Positions[i].Y == Program.ScreenH * 0.3f + 2.0f * 48.0f )
+                if (
+                    Positions[i].Y > Program.ScreenH * 0.3f + -1 * 48 &&
+                    Positions[i].Y < Program.ScreenH * 0.3f + 1 * 48
+                )
                 {
-                    Sprite.Texture = new Texture("assets/tilePink.png");
+                    Sprite.Texture = TileTextures[2];
                 } 
-                else if (Positions[i].Y == Program.ScreenH * 0.3f + -1.0f * 48.0f || Positions[i].Y == Program.ScreenH * 0.3f + 1.0f * 48.0f )
+                else if (
+                    Positions[i].Y > Program.ScreenH * 0.3f + -2 * 48 &&
+                    Positions[i].Y < Program.ScreenH * 0.3f + 2 * 48
+                )
                 {
-                    Sprite.Texture = new Texture("assets/tileBlue.png");
+                    Sprite.Texture = TileTextures[1];
                 }
                 else
                 {
-                    Sprite.Texture = new Texture("assets/tileGreen.png");
+                    Sprite.Texture = TileTextures[0];
                 }
+                
                 Sprite.Position = Positions[i];
                 target.Draw(Sprite);
             }
