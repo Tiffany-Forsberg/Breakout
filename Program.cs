@@ -36,6 +36,7 @@ namespace Breakout
                         powerUps = new PowerUps();
                     }
 
+                    // Resets the tiles if all tiles are destroyed
                     if (tiles.Positions.Count == 0)
                     {
                         tiles = new Tiles();
@@ -46,7 +47,6 @@ namespace Breakout
                     paddle.Update(ball, powerUps, deltaTime);
                     tiles.Update(ball, deltaTime, powerUps);
                     powerUps.Update(deltaTime);
-                    
                     window.Clear(new Color(131, 197, 235));
 
                     // Drawing
