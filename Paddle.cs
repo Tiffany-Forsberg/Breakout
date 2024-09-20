@@ -24,7 +24,7 @@ namespace Breakout
             
             Vector2f paddleTextureSize = (Vector2f) this.Sprite.Texture.Size;
             Sprite.Origin = 0.5f * paddleTextureSize;
-            Sprite.Scale = new Vector2f(this.Width / paddleTextureSize.X, this.Height / paddleTextureSize.Y);
+            Sprite.Scale = new Vector2f(128.0f / paddleTextureSize.X, 28.0f / paddleTextureSize.Y);
             BaseScale = Sprite.Scale;
 
             this.Size = new Vector2f(this.Sprite.GetGlobalBounds().Width, this.Sprite.GetGlobalBounds().Height);
@@ -51,14 +51,14 @@ namespace Breakout
                 ball.Active = true;
             }
 
-            if (newPos.X > Program.ScreenW - this.Width / 2)
+            if (newPos.X > Program.ScreenW - Sprite.GetGlobalBounds().Width / 2)
             {
-                newPos.X = Program.ScreenW - this.Width / 2;
+                newPos.X = Program.ScreenW - Sprite.GetGlobalBounds().Width / 2;
             }
             
-            if (newPos.X < this.Width / 2)
+            if (newPos.X < Sprite.GetGlobalBounds().Width / 2)
             {
-                newPos.X = this.Width / 2;
+                newPos.X = Sprite.GetGlobalBounds().Width / 2;
             }
 
             if (Collision.CircleRectangle(
