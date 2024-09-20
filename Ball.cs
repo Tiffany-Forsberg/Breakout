@@ -9,7 +9,7 @@ namespace Breakout
         public const float Diameter = 20.0f;
         public const float Radius = Diameter * 0.5f;
         public Vector2f Direction = new Vector2f(1, 1) / MathF.Sqrt(2.0f);
-        private float Speed = 200.0f;
+        private float Speed = 300.0f;
         public int Health = 3;
         public int Score;
         public Text Gui;
