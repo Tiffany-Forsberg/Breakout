@@ -22,12 +22,18 @@ namespace Breakout
             this.Sprite.Texture = new Texture("assets/paddle.png");
             this.Sprite.Position = new Vector2f(Program.ScreenW / 2f, Program.ScreenH - 50f);
             
+            // Uses sprite size to set origin to center
             Vector2f paddleTextureSize = (Vector2f) this.Sprite.Texture.Size;
             Sprite.Origin = 0.5f * paddleTextureSize;
+            
+            // Resizes sprite
             Sprite.Scale = new Vector2f(128.0f / paddleTextureSize.X, 28.0f / paddleTextureSize.Y);
             BaseScale = Sprite.Scale;
 
+            // Sets size to be used for collision
             this.Size = new Vector2f(this.Sprite.GetGlobalBounds().Width, this.Sprite.GetGlobalBounds().Height);
+            
+            // Base size for power up reset
             BaseSize = Size;
 
             PowerUpDuration = 0;
@@ -45,10 +51,15 @@ namespace Breakout
             {
                 newPos.X -= deltaTime * 300.0f;
             }
-
+            
             if (!ball.Active && Keyboard.IsKeyPressed(Keyboard.Key.Space))
             {
                 ball.Active = true;
+            }
+            
+            if (ball.Active == false)
+            {
+                ball.Sprite.Position = newPos - new Vector2f(0, 30.0f);
             }
 
             if (newPos.X > Program.ScreenW - Sprite.GetGlobalBounds().Width / 2)
@@ -73,10 +84,10 @@ namespace Breakout
                 ball.Reflect(hit.Normalized());
             }
 
-            foreach (Vector2f position in powerUps.Positions)
+            foreach (Vector2f powerUpPosition in powerUps.Positions)
             {
                 if (Collision.CircleRectangle(
-                    position,
+                    powerUpPosition,
                     PowerUps.Radius,
                     Sprite.Position,
                     Size,
@@ -89,11 +100,12 @@ namespace Breakout
                     }
 
                     PowerUpDuration += 4;
-                    powerUps.Positions.Remove(position);
+                    powerUps.Positions.Remove(powerUpPosition);
                     break;
                 }
             }
 
+            // Handles active power ups
             if (Timer.ElapsedTime.AsSeconds() < PowerUpDuration && PowerUpDuration > 0)
             {
                 Sprite.Scale = new Vector2f(BaseScale.X * 1.5f, BaseScale.Y);
@@ -106,11 +118,6 @@ namespace Breakout
                 Size = BaseSize;
             }
             
-            if (ball.Active == false)
-            {
-                ball.Sprite.Position = newPos - new Vector2f(0, 30.0f);
-            }
-
             this.Sprite.Position = newPos;
         }
         

@@ -19,9 +19,13 @@ namespace Breakout
         {
             Sprite = new Sprite();
             Sprite.Texture = new Texture("assets/ball.png");
-            Vector2f ballTextureSize = (Vector2f) Sprite.Texture.Size;
             Active = false;
+            
+            // Uses sprite size to set origin to center
+            Vector2f ballTextureSize = (Vector2f) Sprite.Texture.Size;
             Sprite.Origin = 0.5f * ballTextureSize;
+            
+            // Resizes sprite
             Sprite.Scale = new Vector2f(Diameter / ballTextureSize.X, Diameter / ballTextureSize.Y);
             Gui = new Text();
             Gui.CharacterSize = 24;
@@ -54,6 +58,8 @@ namespace Breakout
                 {
                     Health -= 1;
                     Active = false;
+                    
+                    // Sets initial direction vector to random
                     float newXDirection;
                     if (new Random().Next() % 2 == 0)
                     {
@@ -85,7 +91,7 @@ namespace Breakout
         public void Draw(RenderTarget target)
         {
             target.Draw(this.Sprite);
-
+            
             Gui.DisplayedString = $"Health: {Health}";
             Gui.Position = new Vector2f(12, 8);
             target.Draw(Gui);

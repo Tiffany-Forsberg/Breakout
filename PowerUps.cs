@@ -21,10 +21,14 @@ namespace Breakout
             Sprite.Texture = new Texture("assets/ball.png");
             Sprite.Color = new Color(255, 69, 0);
 
+            // Uses sprite size to set origin to center
             Vector2f powerUpTextureSize = (Vector2f)Sprite.Texture.Size;
             Sprite.Origin = 0.5f * powerUpTextureSize;
+            
+            // Resizes sprite
             Sprite.Scale = new Vector2f(Diameter / powerUpTextureSize.X, Diameter / powerUpTextureSize.Y);
             
+            // Initiates list of power up positions
             Positions = new List<Vector2f>();
 
             Gui = new Text();
@@ -47,12 +51,13 @@ namespace Breakout
 
         public void Draw(RenderTarget target)
         {
-            foreach (Vector2f position in Positions)
+            foreach (Vector2f powerUpPosition in Positions)
             {
-                Sprite.Position = position;
+                Sprite.Position = powerUpPosition;
                 target.Draw(Sprite);
+                
                 Gui.DisplayedString = "P";
-                Gui.Position = position;
+                Gui.Position = powerUpPosition;
                 target.Draw(Gui);
             }
         }
